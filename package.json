@@ -1,7 +1,7 @@
 {
   "name": "graphql-proxy-client",
-  "version": "1.0.0",
-  "description": "graphql-proxy-client React component",
+  "version": "0.1.0",
+  "description": "Send proxied actions to arbitrary GraphQL endpoints",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -13,25 +13,78 @@
   "scripts": {
     "build": "nwb build-react-component",
     "clean": "nwb clean-module && nwb clean-demo",
-    "start": "nwb serve-react-demo",
+    "demo": "nwb serve-react-demo",
     "test": "nwb test-react",
-    "test:coverage": "nwb test-react --coverage",
-    "test:watch": "nwb test-react --server"
+    "test:coverage": "yarn test --coverage",
+    "test:watch": "yarn test:coverage --server",
+    "docs:prepare": "gitbook install && mkdir -p docs",
+    "docs:api": "jsdoc2md --configure tooling/docs/jsdoc.json --files src/**/*.js > docs/api.md",
+    "docs:build": "run-s docs:prepare docs:api && gitbook build",
+    "docs:serve": "yarn docs:build && gitbook serve",
+    "docs:clean": "rm -rf _book",
+    "docs:publish": "yarn docs:build && yarn gh-pages -d _book",
+    "dev": "yarn && run-p docs:serve test:watch demo",
+    "precommit": "pretty-quick --staged && yarn prepublishOnly",
+    "prepublishOnly": "run-s clean build test clean build",
+    "cz": "git-cz"
   },
-  "dependencies": {},
+  "dependencies": {
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.9.2",
+    "react-apollo": "^2.1.6"
+  },
   "peerDependencies": {
     "react": "16.x"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.0.0-beta.51",
+    "apollo-cache-inmemory": "^1.2.5",
+    "apollo-client": "^2.3.5",
+    "apollo-link-http": "^1.5.4",
+    "babel-core": "^6.26.3",
+    "cz-conventional-changelog": "^2.1.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "gh-pages": "^1.2.0",
+    "gitbook-cli": "^2.3.2",
+    "husky": "^0.14.3",
+    "jsdoc-babel": "^0.4.0",
+    "jsdoc-to-markdown": "^4.0.1",
+    "npm-run-all": "^4.1.3",
     "nwb": "0.21.x",
+    "prettier": "^1.13.5",
+    "pretty-quick": "^1.6.0",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "typed-ui": "^0.3.4",
+    "unfetch": "^3.0.0"
   },
-  "author": "",
-  "homepage": "",
+  "author": "Pi Cubed",
+  "homepage": "https://github.com/pi-cubed/graphql-proxy-client",
   "license": "MIT",
-  "repository": "",
+  "repository": "https://github.com/pi-cubed/graphql-proxy-client",
   "keywords": [
-    "react-component"
-  ]
+    "react-component",
+    "graphql",
+    "react",
+    "ui"
+  ],
+  "bugs": "https://github.com/pi-cubed/graphql-proxy-client/issues",
+  "contributors": [
+    {
+      "name": "Dylan Richardson",
+      "email": "dylanrichardson1996@gmail.com",
+      "url": "https://github.com/drich14"
+    },
+    {
+      "name": "Craig Valenti",
+      "email": "cvalenti312@gmail.com",
+      "url": "https://github.com/CrazyCreje"
+    }
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
