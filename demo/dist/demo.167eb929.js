@@ -22826,7 +22826,7 @@ webpackJsonp(
     TJvD: function(e, t, n) {
       'use strict';
       n.d(t, 'a', function() {
-        return I;
+        return j;
       });
       var r = n('GiK3'),
         i = n.n(r),
@@ -22844,7 +22844,7 @@ webpackJsonp(
             }
             return e;
           },
-        l = h(
+        l = v(
           [
             '\n      query Schema($url: String!) {\n        schema(url: $url)\n      }\n    '
           ],
@@ -22852,7 +22852,7 @@ webpackJsonp(
             '\n      query Schema($url: String!) {\n        schema(url: $url)\n      }\n    '
           ]
         ),
-        f = h(
+        f = v(
           [
             '\n      query Query($url: String!, $query: String!) {\n        query(url: $url, query: $query)\n      }\n    '
           ],
@@ -22860,7 +22860,7 @@ webpackJsonp(
             '\n      query Query($url: String!, $query: String!) {\n        query(url: $url, query: $query)\n      }\n    '
           ]
         ),
-        p = h(
+        p = v(
           [
             '\n      mutation Mutation($url: String!, $mutation: String!) {\n        mutate(url: $url, mutation: $mutation)\n      }\n    '
           ],
@@ -22869,63 +22869,65 @@ webpackJsonp(
           ]
         );
       function d(e, t) {
+        if (!(e instanceof t))
+          throw new TypeError('Cannot call a class as a function');
+      }
+      function h(e, t) {
         if (!e)
           throw new ReferenceError(
             "this hasn't been initialised - super() hasn't been called"
           );
         return !t || ('object' != typeof t && 'function' != typeof t) ? e : t;
       }
-      function h(e, t) {
+      function y(e, t) {
+        if ('function' != typeof t && null !== t)
+          throw new TypeError(
+            'Super expression must either be null or a function, not ' +
+              typeof t
+          );
+        (e.prototype = Object.create(t && t.prototype, {
+          constructor: {
+            value: e,
+            enumerable: !1,
+            writable: !0,
+            configurable: !0
+          }
+        })),
+          t &&
+            (Object.setPrototypeOf
+              ? Object.setPrototypeOf(e, t)
+              : (e.__proto__ = t));
+      }
+      function v(e, t) {
         return (e.raw = t), e;
       }
-      var y = function(e) {
+      var m = function(e) {
           return (function(t) {
             function n() {
               var e, r;
-              !(function(e, t) {
-                if (!(e instanceof t))
-                  throw new TypeError('Cannot call a class as a function');
-              })(this, n);
+              d(this, n);
               for (var i = arguments.length, o = Array(i), a = 0; a < i; a++)
                 o[a] = arguments[a];
               return (
-                (e = r = d(this, t.call.apply(t, [this].concat(o)))),
+                (e = r = h(this, t.call.apply(t, [this].concat(o)))),
                 (r.state = {}),
-                d(r, e)
+                h(r, e)
               );
             }
             return (
-              (function(e, t) {
-                if ('function' != typeof t && null !== t)
-                  throw new TypeError(
-                    'Super expression must either be null or a function, not ' +
-                      typeof t
-                  );
-                (e.prototype = Object.create(t && t.prototype, {
-                  constructor: {
-                    value: e,
-                    enumerable: !1,
-                    writable: !0,
-                    configurable: !0
-                  }
-                })),
-                  t &&
-                    (Object.setPrototypeOf
-                      ? Object.setPrototypeOf(e, t)
-                      : (e.__proto__ = t));
-              })(n, t),
+              y(n, t),
               (n.prototype.componentDidMount = function() {
                 var e = this,
                   t = this.props,
-                  n = t.mutation,
-                  r = t.onError;
+                  n = t.mutation;
+                t.onError;
                 n()
                   .then(function(t) {
                     var n = t.data.mutate;
                     return e.setState({ mutate: n });
                   })
                   .catch(function(t) {
-                    r(t), e.setState({ error: t });
+                    return e.setState({ error: t });
                   });
               }),
               (n.prototype.render = function() {
@@ -22941,15 +22943,15 @@ webpackJsonp(
             );
           })(r.Component);
         },
-        v = function(e) {
+        g = function(e) {
           return function(t) {
             return function(n) {
               return i.a.createElement(t, s({}, n, e));
             };
           };
         },
-        m = function(e, t) {
-          return g(t)
+        b = function(e, t) {
+          return _(t)
             ? (function(e, t) {
                 return Object(u.graphql)(a()(p), {
                   name: 'mutation',
@@ -22963,7 +22965,7 @@ webpackJsonp(
                 });
               })(e, t);
         },
-        g = function(e) {
+        _ = function(e) {
           return (
             'mutation' ===
             (function(e) {
@@ -22971,18 +22973,18 @@ webpackJsonp(
             })(e)
           );
         },
-        b = function(e, t) {
+        T = function(e, t) {
           var n = (function(e, t) {
             return Object(c.buildClientSchema)(JSON.parse(t))
-              [g(e) ? 'getMutationType' : 'getQueryType']()
-              .getFields()[_(e)];
+              [_(e) ? 'getMutationType' : 'getQueryType']()
+              .getFields()[E(e)];
           })(e, t);
           return n && n.type;
         },
-        _ = function(e) {
+        E = function(e) {
           return a()(e).definitions[0].selectionSet.selections[0].name.value;
         },
-        T = function(e) {
+        O = function(e) {
           return function(t) {
             var n = t.query,
               r = (t.mutate, t.schema),
@@ -23010,44 +23012,61 @@ webpackJsonp(
             );
           };
         },
-        E = function(e) {
-          return function(t) {
-            var n = t.query,
-              r = t.mutate,
-              o = t.schema,
-              a = t.action,
-              u = t.onError,
-              c = t.onLoad,
-              l = n || r,
-              f = l && JSON.parse(l),
-              p = _(a),
-              d = b(a, o),
-              h = !d && 'Action not found: ' + p;
+        w = function(e) {
+          return (function(t) {
+            function n(e) {
+              d(this, n);
+              var r = h(this, t.call(this, e)),
+                i = e.query,
+                o = e.mutate,
+                a = e.action,
+                u = e.schema,
+                c = e.error,
+                s = i || o,
+                l = E(a);
+              return (
+                (r.state = {
+                  data: s && JSON.parse(s),
+                  name: l,
+                  type: T(a, u),
+                  error: (!r.type && { message: 'Action not found: ' + l }) || c
+                }),
+                r
+              );
+            }
             return (
-              h ? u(h) : c(),
-              i.a.createElement(
-                e,
-                s({ type: d, name: p, data: f, error: h || t.error }, t)
-              )
+              y(n, t),
+              (n.prototype.componentDidMount = function() {
+                var e = this.props,
+                  t = e.onError,
+                  n = e.onLoad,
+                  r = this.state,
+                  i = r.error,
+                  o = r.data;
+                i ? t(i) : n(o);
+              }),
+              (n.prototype.render = function() {
+                return i.a.createElement(e, s({}, this.props, this.state));
+              }),
+              n
             );
-          };
+          })(r.Component);
         },
-        O = function(e) {
+        N = function(e) {
           return function(t) {
             var n = t.loading,
               r = t.renderLoading;
             return n ? r() : i.a.createElement(e, t);
           };
         },
-        w = function(e) {
+        S = function(e) {
           return function(t) {
             var n = t.error,
               r = t.renderError;
-            t.onError;
             return n ? r(n) : i.a.createElement(e, t);
           };
         },
-        N = v({
+        I = g({
           renderLoading: function() {
             return i.a.createElement('div', null, 'loading...');
           },
@@ -23057,36 +23076,36 @@ webpackJsonp(
           onError: function() {},
           onLoad: function() {}
         }),
-        S = function(e) {
+        k = function(e) {
           var t = e.url,
             n = e.action;
           return Object(u.compose)(
-            N,
-            v(e),
+            I,
+            g(e),
             (function(e) {
               return Object(u.graphql)(a()(l), {
                 name: 'schema',
                 options: { variables: { url: e } }
               });
             })(t),
-            m(t, n),
-            T,
+            b(t, n),
+            O,
             (function(e) {
               return Object(u.compose)(
                 e
-                  ? y
+                  ? m
                   : function(e) {
                       return e;
                     },
-                O,
-                E,
-                w
+                N,
+                w,
+                S
               );
-            })(g(n))
+            })(_(n))
           );
         },
-        I = function(e) {
-          var t = S(e)(e.children);
+        j = function(e) {
+          var t = k(e)(e.children);
           return i.a.createElement(t, null);
         };
     },
@@ -25990,16 +26009,19 @@ webpackJsonp(
         l = function(e) {
           var t = e.uri,
             n = void 0 === t ? 'http://proxy-graphql.herokuapp.com' : t,
-            r = e.children;
+            r = e.client,
+            l = e.children;
           return i.a.createElement(
             o.ApolloProvider,
             {
-              client: new a.default({
-                link: Object(c.a)({ uri: n, fetch: u.a }),
-                cache: new s.a()
-              })
+              client:
+                r ||
+                new a.default({
+                  link: Object(c.a)({ uri: n, fetch: u.a }),
+                  cache: new s.a()
+                })
             },
-            r
+            l
           );
         };
     },
@@ -32078,4 +32100,4 @@ webpackJsonp(
   },
   [0]
 );
-//# sourceMappingURL=demo.c256fb66.js.map
+//# sourceMappingURL=demo.167eb929.js.map

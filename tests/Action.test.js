@@ -1,21 +1,21 @@
 import { VALID, INVALID, renderEquals, dataEquals, errorEquals } from './utils';
 
 describe('Action', () => {
-  it(
+  xit(
     'renders data from a valid query',
     renderEquals(`query Q { ${VALID} }`, VALID)
   );
 
-  it(
+  xit(
     'calls onLoad from an valid query',
     dataEquals(`query Q { ${VALID} }`, VALID)
   );
-  it(
+  xit(
     'renders data from a valid mutation',
     renderEquals(`mutation Q { ${VALID} }`, VALID)
   );
 
-  it(
+  xit(
     'calls onLoad from a valid mutation',
     dataEquals(`mutation Q { ${VALID} }`, VALID)
   );

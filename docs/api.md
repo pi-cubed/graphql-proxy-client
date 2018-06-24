@@ -7,8 +7,9 @@
 <dt><a href="#Action">Action</a> ⇒ <code>Component</code></dt>
 <dd><p>Return component outputting the response of the GraphQL action.</p>
 </dd>
-<dt><a href="#ProxyProvider">ProxyProvider</a></dt>
-<dd><p>TODO docs</p>
+<dt><a href="#ProxyProvider">ProxyProvider</a> ⇒ <code>Component</code></dt>
+<dd><p>Return the children with an ApolloClient which defaults to point at
+  <a href="http://proxy-graphql.herokuapp.com">http://proxy-graphql.herokuapp.com</a>.</p>
 </dd>
 </dl>
 
@@ -26,7 +27,7 @@ TODO docs
 Return component outputting the response of the GraphQL action.
 
 **Kind**: global variable  
-**Returns**: <code>Component</code> - A list around the items.
+**Returns**: <code>Component</code> - A component that displays the response from the action.
 
 | Param            | Type                                       | Description                     |
 | ---------------- | ------------------------------------------ | ------------------------------- |
@@ -40,12 +41,11 @@ Return component outputting the response of the GraphQL action.
 **Example** _(Display users&#x27; names from GraphQL API)_
 
 ```js
-<Action
-  url="https://us1.prisma.sh/dylan-richardson-59e89b/hew/dev"
-  action={'query Q { users { name } }'}
->
-  <Put />
-</Action>
+<ProxyProvider>
+  <Action url="http://proxy-graphql.herokuapp.com" action="query Q { test }">
+    <Put />
+  </Action>
+</ProxyProvider>
 ```
 
 <a name="Action..onChange"></a>
@@ -62,8 +62,26 @@ This callback handles Action change events.
 
 <a name="ProxyProvider"></a>
 
-## ProxyProvider
+## ProxyProvider ⇒ <code>Component</code>
 
-TODO docs
+Return the children with an ApolloClient which defaults to point at
+http://proxy-graphql.herokuapp.com.
 
-**Kind**: global variable
+**Kind**: global variable  
+**Returns**: <code>Component</code> - An ApolloProvider with a custom client.
+
+| Param          | Type                      | Description           |
+| -------------- | ------------------------- | --------------------- |
+| props          | <code>Object</code>       | The component props.  |
+| [props.uri]    | <code>ApolloClient</code> | The GraphQL endpoint. |
+| [props.client] | <code>ApolloClient</code> | The Apollo client.    |
+
+**Example** _(Display users&#x27; names from GraphQL API)_
+
+```js
+<ProxyProvider>
+  <Action url="http://proxy-graphql.herokuapp.com" action="query Q { test }">
+    <Put />
+  </Action>
+</ProxyProvider>
+```
