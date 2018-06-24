@@ -92,10 +92,7 @@ const withMutationHandler = WC =>
       const { mutation, onError } = this.props;
       mutation()
         .then(({ data: { mutate } }) => this.setState({ mutate }))
-        .catch(error => {
-          onError(error);
-          this.setState({ error });
-        });
+        .catch(error => this.setState({ error }));
     }
 
     /**
@@ -195,28 +192,35 @@ const withTidy = WC => ({
  *
  * @private
  */
-const withDataHandler = WC => props => {
-  const { query, mutate, schema, action, onError, onLoad } = props;
-  const raw = query || mutate;
-  const data = raw && JSON.parse(raw);
-  const name = getName(action);
-  const type = getType(action, schema);
-  const error = !type && `Action not found: ${name}`;
-  if (error) {
-    onError(error);
-  } else {
-    onLoad();
-  }
-  return (
-    <WC
-      type={type}
-      name={name}
-      data={data}
-      error={error || props.error}
-      {...props}
-    />
-  );
-};
+const withDataHandler = WC =>
+  class DataHandler extends Component {
+    constructor(props) {
+      super(props);
+      const { query, mutate, action, schema, error } = props;
+      const raw = query || mutate;
+      const name = getName(action);
+      this.state = {
+        data: raw && JSON.parse(raw),
+        name,
+        type: getType(action, schema),
+        error: (!this.type && { message: `Action not found: ${name}` }) || error
+      };
+    }
+
+    componentDidMount() {
+      const { onError, onLoad } = this.props;
+      const { error, data } = this.state;
+      if (error) {
+        onError(error);
+      } else {
+        onLoad(data);
+      }
+    }
+
+    render() {
+      return <WC {...this.props} {...this.state} />;
+    }
+  };
 
 /**
  * TODO docs
@@ -234,7 +238,7 @@ const withLoadingHandler = WC => props => {
  * @private
  */
 const withErrorHandler = WC => props => {
-  const { error, renderError, onError } = props;
+  const { error, renderError } = props;
   return error ? renderError(error) : <WC {...props} />;
 };
 
@@ -287,15 +291,17 @@ export const withAction = props => {
  * @param {GraphQLSchema} [props.schema] - The schema for the GraphQL api.
  * @param {Action~onChange} [props.onChange] - The data change handler.
  * @param {ApolloClient} props.client - The Apollo client.
- * @returns {Component} A list around the items.
+ * @returns {Component} A component that displays the response from the action.
  *
  * @example <caption>Display users' names from GraphQL API</caption>
- * <Action
- *   url="https://us1.prisma.sh/dylan-richardson-59e89b/hew/dev"
- *   action={'query Q { users { name } }'}
- * >
- *   <Put />
- * </Action>
+ * <ProxyProvider>
+ *   <Action
+ *     url="http://proxy-graphql.herokuapp.com"
+ *     action="query Q { test }"
+ *   >
+ *     <Put />
+ *   </Action>
+ * </ProxyProvider>
  */
 export const Action = props => {
   const _ = withAction(props)(props.children);
