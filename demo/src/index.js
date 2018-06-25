@@ -1,15 +1,22 @@
-import React, {Component} from 'react'
-import {render} from 'react-dom'
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import { Action, ProxyProvider } from '../../src';
+import { Put } from 'typed-ui';
 
-import Example from '../../src'
+const Demo = () => (
+  <div>
+    <h1>graphql-proxy-client Demo</h1>
+    <ProxyProvider>
+      <Action
+        url="https://proxy-graphql.herokuapp.com"
+        action="mutation Q { test }"
+        onLoad={d => console.log('load', d)}
+        onError={e => console.log('err', e)}
+      >
+        <Put />
+      </Action>
+    </ProxyProvider>
+  </div>
+);
 
-class Demo extends Component {
-  render() {
-    return <div>
-      <h1>graphql-proxy-client Demo</h1>
-      <Example/>
-    </div>
-  }
-}
-
-render(<Demo/>, document.querySelector('#demo'))
+render(<Demo />, document.querySelector('#demo'));
