@@ -9,7 +9,9 @@ const Demo = () => (
     <ProxyProvider>
       <Action
         url="https://proxy-graphql.herokuapp.com"
-        action="query Q { test }"
+        action="mutation Q { test }"
+        onLoad={d => console.log('load', d)}
+        onError={e => console.log('err', e)}
       >
         <Put />
       </Action>

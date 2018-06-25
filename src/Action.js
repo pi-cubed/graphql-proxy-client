@@ -72,47 +72,6 @@ const withMutation = (url, mutation) =>
  *
  * @private
  */
-const withMutationHandler = WC =>
-  /**
-   * TODO docs
-   *
-   * @extends Component
-   *
-   * @private
-   */
-  class MutationHandler extends Component {
-    state = {};
-
-    /**
-     * TODO docs
-     *
-     * @private
-     */
-    componentDidMount() {
-      const { mutation, onError } = this.props;
-      mutation()
-        .then(({ data: { mutate } }) => this.setState({ mutate }))
-        .catch(error => this.setState({ error }));
-    }
-
-    /**
-     * TODO docs
-     *
-     * @private
-     */
-    render() {
-      const { mutate, error } = this.state;
-      return (
-        <WC loading={!mutate} mutate={mutate} error={error} {...this.props} />
-      );
-    }
-  };
-
-/**
- * TODO docs
- *
- * @private
- */
 const withProps = props => WC => newProps => <WC {...newProps} {...props} />;
 
 /**
@@ -179,13 +138,59 @@ const withTidy = WC => ({
   ...props
 }) => (
   <WC
+    {...props}
     query={query && query.query}
     schema={schema && schema.schema}
     loading={loading || (query && query.loading) || (schema && schema.loading)}
     error={error || (query && query.error) || (schema && schema.error)}
-    {...props}
   />
 );
+
+/**
+ * TODO docs
+ *
+ * @private
+ */
+const withMutationHandler = WC =>
+  /**
+   * TODO docs
+   *
+   * @extends Component
+   *
+   * @private
+   */
+  class MutationHandler extends Component {
+    state = {};
+
+    /**
+     * TODO docs
+     *
+     * @private
+     */
+    componentDidMount() {
+      const { mutation, onError } = this.props;
+      mutation()
+        .then(({ data: { mutate } }) => this.setState({ mutate }))
+        .catch(error => this.setState({ error }));
+    }
+
+    /**
+     * TODO docs
+     *
+     * @private
+     */
+    render() {
+      const { mutate, error } = this.state;
+      return (
+        <WC
+          {...this.props}
+          loading={(!mutate && !error) || this.props.loading}
+          mutate={mutate}
+          error={error}
+        />
+      );
+    }
+  };
 
 /**
  * TODO docs
@@ -207,9 +212,8 @@ const withDataHandler = WC =>
         error: (!type && { message: `Action not found: ${name}` }) || error
       };
     }
-
     componentDidMount() {
-      const { onError, onLoad } = this.props;
+      const { onError, onLoad, schema } = this.props;
       const { error, data } = this.state;
       if (error) {
         onError(error);
