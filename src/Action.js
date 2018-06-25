@@ -213,7 +213,7 @@ const withDataHandler = WC =>
       };
     }
     componentDidMount() {
-      const { onError, onLoad, schema } = this.props;
+      const { onError, onLoad } = this.props;
       const { error, data } = this.state;
       if (error) {
         onError(error);

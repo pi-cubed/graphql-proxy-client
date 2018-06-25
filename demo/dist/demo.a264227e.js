@@ -22902,6 +22902,72 @@ webpackJsonp(
         return (e.raw = t), e;
       }
       var m = function(e) {
+          return function(t) {
+            return function(n) {
+              return i.a.createElement(t, s({}, n, e));
+            };
+          };
+        },
+        g = function(e, t) {
+          return b(t)
+            ? (function(e, t) {
+                return Object(u.graphql)(a()(p), {
+                  name: 'mutation',
+                  options: { variables: { url: e, mutation: t } }
+                });
+              })(e, t)
+            : (function(e, t) {
+                return Object(u.graphql)(a()(f), {
+                  name: 'query',
+                  options: { variables: { url: e, query: t } }
+                });
+              })(e, t);
+        },
+        b = function(e) {
+          return (
+            'mutation' ===
+            (function(e) {
+              return a()(e).definitions[0].operation;
+            })(e)
+          );
+        },
+        _ = function(e, t) {
+          var n = (function(e, t) {
+            return Object(c.buildClientSchema)(JSON.parse(t))
+              [b(e) ? 'getMutationType' : 'getQueryType']()
+              .getFields()[T(e)];
+          })(e, t);
+          return n && n.type;
+        },
+        T = function(e) {
+          return a()(e).definitions[0].selectionSet.selections[0].name.value;
+        },
+        E = function(e) {
+          return function(t) {
+            var n = t.query,
+              r = (t.mutate, t.schema),
+              o = t.loading,
+              a = t.error,
+              u = (function(e, t) {
+                var n = {};
+                for (var r in e)
+                  t.indexOf(r) >= 0 ||
+                    (Object.prototype.hasOwnProperty.call(e, r) &&
+                      (n[r] = e[r]));
+                return n;
+              })(t, ['query', 'mutate', 'schema', 'loading', 'error']);
+            return i.a.createElement(
+              e,
+              s({}, u, {
+                query: n && n.query,
+                schema: r && r.schema,
+                loading: o || (n && n.loading) || (r && r.loading),
+                error: a || (n && n.error) || (r && r.error)
+              })
+            );
+          };
+        },
+        O = function(e) {
           return (function(t) {
             function n() {
               var e, r;
@@ -22936,81 +23002,16 @@ webpackJsonp(
                   r = t.error;
                 return i.a.createElement(
                   e,
-                  s({ loading: !n, mutate: n, error: r }, this.props)
+                  s({}, this.props, {
+                    loading: (!n && !r) || this.props.loading,
+                    mutate: n,
+                    error: r
+                  })
                 );
               }),
               n
             );
           })(r.Component);
-        },
-        g = function(e) {
-          return function(t) {
-            return function(n) {
-              return i.a.createElement(t, s({}, n, e));
-            };
-          };
-        },
-        b = function(e, t) {
-          return _(t)
-            ? (function(e, t) {
-                return Object(u.graphql)(a()(p), {
-                  name: 'mutation',
-                  options: { variables: { url: e, mutation: t } }
-                });
-              })(e, t)
-            : (function(e, t) {
-                return Object(u.graphql)(a()(f), {
-                  name: 'query',
-                  options: { variables: { url: e, query: t } }
-                });
-              })(e, t);
-        },
-        _ = function(e) {
-          return (
-            'mutation' ===
-            (function(e) {
-              return a()(e).definitions[0].operation;
-            })(e)
-          );
-        },
-        T = function(e, t) {
-          var n = (function(e, t) {
-            return Object(c.buildClientSchema)(JSON.parse(t))
-              [_(e) ? 'getMutationType' : 'getQueryType']()
-              .getFields()[E(e)];
-          })(e, t);
-          return n && n.type;
-        },
-        E = function(e) {
-          return a()(e).definitions[0].selectionSet.selections[0].name.value;
-        },
-        O = function(e) {
-          return function(t) {
-            var n = t.query,
-              r = (t.mutate, t.schema),
-              o = t.loading,
-              a = t.error,
-              u = (function(e, t) {
-                var n = {};
-                for (var r in e)
-                  t.indexOf(r) >= 0 ||
-                    (Object.prototype.hasOwnProperty.call(e, r) &&
-                      (n[r] = e[r]));
-                return n;
-              })(t, ['query', 'mutate', 'schema', 'loading', 'error']);
-            return i.a.createElement(
-              e,
-              s(
-                {
-                  query: n && n.query,
-                  schema: r && r.schema,
-                  loading: o || (n && n.loading) || (r && r.loading),
-                  error: a || (n && n.error) || (r && r.error)
-                },
-                u
-              )
-            );
-          };
         },
         w = function(e) {
           return (function(t) {
@@ -23023,8 +23024,8 @@ webpackJsonp(
                 u = e.schema,
                 c = e.error,
                 s = i || o,
-                l = E(a),
-                f = T(a, u);
+                l = T(a),
+                f = _(a, u);
               return (
                 (r.state = {
                   data: s && JSON.parse(s)[l],
@@ -23041,7 +23042,7 @@ webpackJsonp(
                 var e = this.props,
                   t = e.onError,
                   n = e.onLoad,
-                  r = this.state,
+                  r = (e.schema, this.state),
                   i = r.error,
                   o = r.data;
                 i ? t(i) : n(o);
@@ -23067,7 +23068,7 @@ webpackJsonp(
             return n ? r(n) : i.a.createElement(e, t);
           };
         },
-        I = g({
+        I = m({
           renderLoading: function() {
             return i.a.createElement('div', null, 'loading...');
           },
@@ -23086,19 +23087,19 @@ webpackJsonp(
             n = e.action;
           return Object(u.compose)(
             I,
-            g(e),
+            m(e),
             (function(e) {
               return Object(u.graphql)(a()(l), {
                 name: 'schema',
                 options: { variables: { url: e } }
               });
             })(t),
-            b(t, n),
-            O,
+            g(t, n),
+            E,
             (function(e) {
               return Object(u.compose)(
                 e
-                  ? m
+                  ? O
                   : function(e) {
                       return e;
                     },
@@ -23106,7 +23107,7 @@ webpackJsonp(
                 w,
                 S
               );
-            })(_(n))
+            })(b(n))
           );
         },
         j = function(e) {
@@ -25289,7 +25290,13 @@ webpackJsonp(
                 a.a,
                 {
                   url: 'https://proxy-graphql.herokuapp.com',
-                  action: 'query Q { test }'
+                  action: 'mutation Q { test }',
+                  onLoad: function(e) {
+                    return console.log('load', e);
+                  },
+                  onError: function(e) {
+                    return console.log('err', e);
+                  }
                 },
                 i.a.createElement(u.Put, null)
               )
@@ -32107,4 +32114,4 @@ webpackJsonp(
   },
   [0]
 );
-//# sourceMappingURL=demo.fe9f5bb4.js.map
+//# sourceMappingURL=demo.a264227e.js.map
