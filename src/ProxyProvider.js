@@ -16,16 +16,16 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
  *
  * @example <caption>Display users' names from GraphQL API</caption>
  * <ProxyProvider>
- *    <Action
- *      url="http://proxy-graphql.herokuapp.com"
- *      action="query Q { test }"
- *    >
- *      <Put />
+ *   <Action
+ *     url="http://proxy-graphql.herokuapp.com"
+ *     action="query Q { test }"
+ *   >
+ *     <Put />
  *   </Action>
  * </ProxyProvider>
  */
 export const ProxyProvider = ({
-  uri = 'http://proxy-graphql.herokuapp.com',
+  uri = 'https://proxy-graphql.herokuapp.com',
   client,
   children
 }) => (

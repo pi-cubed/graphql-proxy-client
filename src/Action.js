@@ -199,11 +199,12 @@ const withDataHandler = WC =>
       const { query, mutate, action, schema, error } = props;
       const raw = query || mutate;
       const name = getName(action);
+      const type = getType(action, schema);
       this.state = {
-        data: raw && JSON.parse(raw),
+        data: raw && JSON.parse(raw)[name],
         name,
-        type: getType(action, schema),
-        error: (!this.type && { message: `Action not found: ${name}` }) || error
+        type,
+        error: (!type && { message: `Action not found: ${name}` }) || error
       };
     }
 
@@ -262,7 +263,7 @@ const withHandlers = isMutation =>
  */
 const withDefaults = withProps({
   renderLoading: () => <div>loading...</div>,
-  renderError: e => <div>{e.message}</div>,
+  renderError: e => <div>{e.message || 'Something went wrong'}</div>,
   onError: () => {},
   onLoad: () => {}
 });
@@ -304,7 +305,9 @@ export const withAction = props => {
  * </ProxyProvider>
  */
 export const Action = props => {
-  const _ = withAction(props)(props.children);
+  const _ = withAction(props)(newProps =>
+    React.cloneElement(props.children, { ...newProps })
+  );
   return <_ />;
 };
 /**

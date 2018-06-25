@@ -12,9 +12,9 @@ export const withAction = (action, onLoad, onError) => {
   const wrapper = mount(
     <ProxyProvider>
       <Action
-        url="http://proxy-graphql.herokuapp.com"
+        url="https://proxy-graphql.herokuapp.com"
         action={action}
-        onLoad={() => onLoad(wrapper)}
+        onLoad={d => onLoad(wrapper, d)}
         onError={e => onError(wrapper, e)}
       >
         <Put />
