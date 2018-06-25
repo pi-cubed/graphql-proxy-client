@@ -8,7 +8,7 @@ const Demo = () => (
     <h1>graphql-proxy-client Demo</h1>
     <ProxyProvider>
       <Action
-        url="http://proxy-graphql.herokuapp.com"
+        url="https://proxy-graphql.herokuapp.com"
         action="query Q { test }"
       >
         <Put />

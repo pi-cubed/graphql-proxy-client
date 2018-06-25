@@ -28,6 +28,8 @@ export const INVALID = 'invalid';
 
 export const renderEquals = (action, text) => done => {
   const handler = wrapper => {
+    wrapper.update();
+    console.log(';', wrapper.html());
     expect(wrapper.text()).toEqual(text);
     done();
   };

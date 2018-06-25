@@ -80,7 +80,7 @@ http://proxy-graphql.herokuapp.com.
 
 ```js
 <ProxyProvider>
-  <Action url="http://proxy-graphql.herokuapp.com" action="query Q { test }">
+  <Action url="https://proxy-graphql.herokuapp.com" action="query Q { test }">
     <Put />
   </Action>
 </ProxyProvider>

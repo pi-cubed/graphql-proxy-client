@@ -17,7 +17,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
  * @example <caption>Display users' names from GraphQL API</caption>
  * <ProxyProvider>
  *   <Action
- *     url="http://proxy-graphql.herokuapp.com"
+ *     url="https://proxy-graphql.herokuapp.com"
  *     action="query Q { test }"
  *   >
  *     <Put />

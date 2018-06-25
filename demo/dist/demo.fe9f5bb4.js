@@ -23023,13 +23023,14 @@ webpackJsonp(
                 u = e.schema,
                 c = e.error,
                 s = i || o,
-                l = E(a);
+                l = E(a),
+                f = T(a, u);
               return (
                 (r.state = {
-                  data: s && JSON.parse(s),
+                  data: s && JSON.parse(s)[l],
                   name: l,
-                  type: T(a, u),
-                  error: (!r.type && { message: 'Action not found: ' + l }) || c
+                  type: f,
+                  error: (!f && { message: 'Action not found: ' + l }) || c
                 }),
                 r
               );
@@ -23071,7 +23072,11 @@ webpackJsonp(
             return i.a.createElement('div', null, 'loading...');
           },
           renderError: function(e) {
-            return i.a.createElement('div', null, e.message);
+            return i.a.createElement(
+              'div',
+              null,
+              e.message || 'Something went wrong'
+            );
           },
           onError: function() {},
           onLoad: function() {}
@@ -23105,7 +23110,9 @@ webpackJsonp(
           );
         },
         j = function(e) {
-          var t = k(e)(e.children);
+          var t = k(e)(function(t) {
+            return i.a.cloneElement(e.children, s({}, t));
+          });
           return i.a.createElement(t, null);
         };
     },
@@ -25281,7 +25288,7 @@ webpackJsonp(
               i.a.createElement(
                 a.a,
                 {
-                  url: 'http://proxy-graphql.herokuapp.com',
+                  url: 'https://proxy-graphql.herokuapp.com',
                   action: 'query Q { test }'
                 },
                 i.a.createElement(u.Put, null)
@@ -26008,7 +26015,7 @@ webpackJsonp(
         s = n('+dIz'),
         l = function(e) {
           var t = e.uri,
-            n = void 0 === t ? 'http://proxy-graphql.herokuapp.com' : t,
+            n = void 0 === t ? 'https://proxy-graphql.herokuapp.com' : t,
             r = e.client,
             l = e.children;
           return i.a.createElement(
@@ -32100,4 +32107,4 @@ webpackJsonp(
   },
   [0]
 );
-//# sourceMappingURL=demo.167eb929.js.map
+//# sourceMappingURL=demo.fe9f5bb4.js.map
