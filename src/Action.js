@@ -202,15 +202,18 @@ const withDataHandler = WC =>
     constructor(props) {
       super(props);
       const { query, mutate, action, schema, error } = props;
-      const raw = query || mutate;
-      const name = getName(action);
-      const type = getType(action, schema);
-      this.state = {
-        data: raw && JSON.parse(raw)[name],
-        name,
-        type,
-        error: (!type && { message: `Action not found: ${name}` }) || error
-      };
+      this.state = { error };
+      if (schema) {
+        const raw = query || mutate;
+        const name = getName(action);
+        const type = getType(action, schema);
+        this.state = {
+          data: raw && JSON.parse(raw)[name],
+          name,
+          type,
+          error: !type && { message: `Action not found: ${name}` }
+        };
+      }
     }
     componentDidMount() {
       const { onError, onLoad } = this.props;
