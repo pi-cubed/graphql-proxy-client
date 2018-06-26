@@ -1522,7 +1522,7 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-boxen@^1.0.0:
+boxen@^1.0.0, boxen@^1.2.1:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/boxen/-/boxen-1.3.0.tgz#55c6c39a8ba58d9c61ad22cd877532deb665a20b"
   dependencies:
@@ -4249,6 +4249,12 @@ glob@~7.0.6:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
+global-dirs@^0.1.0:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/global-dirs/-/global-dirs-0.1.1.tgz#b319c0dd4607f353f3be9cca4c72fc148c49f445"
+  dependencies:
+    ini "^1.3.4"
+
 global@^4.3.0:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/global/-/global-4.3.2.tgz#e76989268a6c74c38908b1305b10fc0e394e9d0f"
@@ -4752,6 +4758,10 @@ iferr@^0.1.5, iferr@~0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/iferr/-/iferr-0.1.5.tgz#c60eed69e6d8fdb6b3104a1fcbca1c192dc5b501"
 
+ignore-by-default@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ignore-by-default/-/ignore-by-default-1.0.1.tgz#48ca6d72f6c6a3af00a9ad4ae6876be3889e2b09"
+
 ignore-walk@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/ignore-walk/-/ignore-walk-3.0.1.tgz#a83e62e7d272ac0e3b551aaa82831a19b69f82f8"
@@ -5089,6 +5099,13 @@ is-glob@^4.0.0:
   resolved "https://registry.yarnpkg.com/is-glob/-/is-glob-4.0.0.tgz#9521c76845cc2610a85203ddf080a958c2ffabc0"
   dependencies:
     is-extglob "^2.1.1"
+
+is-installed-globally@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/is-installed-globally/-/is-installed-globally-0.1.0.tgz#0dfd98f5a9111716dd535dda6492f67bf3d25a80"
+  dependencies:
+    global-dirs "^0.1.0"
+    is-path-inside "^1.0.0"
 
 is-my-ip-valid@^1.0.0:
   version "1.0.0"
@@ -6501,6 +6518,21 @@ nodemailer@^2.5.0:
     nodemailer-smtp-transport "2.7.2"
     socks "1.1.9"
 
+nodemon@^1.17.5:
+  version "1.17.5"
+  resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.17.5.tgz#e6a665c872fdf09d48bf2a81f3e85f8cfb39322a"
+  dependencies:
+    chokidar "^2.0.2"
+    debug "^3.1.0"
+    ignore-by-default "^1.0.1"
+    minimatch "^3.0.4"
+    pstree.remy "^1.1.0"
+    semver "^5.5.0"
+    supports-color "^5.2.0"
+    touch "^3.1.0"
+    undefsafe "^2.0.2"
+    update-notifier "^2.3.0"
+
 nomnom@~1.6.2:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/nomnom/-/nomnom-1.6.2.tgz#84a66a260174408fc5b77a18f888eccc44fb6971"
@@ -6524,6 +6556,12 @@ nopt@^4.0.1, nopt@~4.0.1:
   dependencies:
     abbrev "1"
     osenv "^0.1.4"
+
+nopt@~1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/nopt/-/nopt-1.0.10.tgz#6ddd21bd2a31417b92727dd585f8a6f37608ebee"
+  dependencies:
+    abbrev "1"
 
 normalize-git-url@~3.0.2:
   version "3.0.2"
@@ -7951,6 +7989,12 @@ pseudomap@^1.0.1, pseudomap@^1.0.2:
 psl@^1.1.24:
   version "1.1.28"
   resolved "https://registry.yarnpkg.com/psl/-/psl-1.1.28.tgz#4fb6ceb08a1e2214d4fd4de0ca22dae13740bc7b"
+
+pstree.remy@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/pstree.remy/-/pstree.remy-1.1.0.tgz#f2af27265bd3e5b32bbfcc10e80bac55ba78688b"
+  dependencies:
+    ps-tree "^1.1.0"
 
 public-encrypt@^4.0.0:
   version "4.0.2"
@@ -9548,7 +9592,7 @@ supports-color@^4.0.0, supports-color@^4.2.1:
   dependencies:
     has-flag "^2.0.0"
 
-supports-color@^5.3.0, supports-color@^5.4.0:
+supports-color@^5.2.0, supports-color@^5.3.0, supports-color@^5.4.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.4.0.tgz#1c6b337402c2137605efe19f10fec390f6faab54"
   dependencies:
@@ -9798,6 +9842,12 @@ toposort@^1.0.0:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/toposort/-/toposort-1.0.7.tgz#2e68442d9f64ec720b8cc89e6443ac6caa950029"
 
+touch@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/touch/-/touch-3.1.0.tgz#fe365f5f75ec9ed4e56825e0bb76d24ab74af83b"
+  dependencies:
+    nopt "~1.0.10"
+
 tough-cookie@>=0.12.0:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.4.2.tgz#aa9133154518b494efab98a58247bfc38818c00c"
@@ -9958,6 +10008,12 @@ undeclared-identifiers@^1.1.2:
     simple-concat "^1.0.0"
     xtend "^4.0.1"
 
+undefsafe@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/undefsafe/-/undefsafe-2.0.2.tgz#225f6b9e0337663e0d8e7cfd686fc2836ccace76"
+  dependencies:
+    debug "^2.2.0"
+
 underscore-contrib@~0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/underscore-contrib/-/underscore-contrib-0.3.0.tgz#665b66c24783f8fa2b18c9f8cbb0e2c7d48c26c7"
@@ -10041,6 +10097,21 @@ unzip-response@^2.0.1:
 upath@^1.0.5:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/upath/-/upath-1.1.0.tgz#35256597e46a581db4793d0ce47fa9aebfc9fabd"
+
+update-notifier@^2.3.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/update-notifier/-/update-notifier-2.5.0.tgz#d0744593e13f161e406acb1d9408b72cad08aff6"
+  dependencies:
+    boxen "^1.2.1"
+    chalk "^2.0.1"
+    configstore "^3.0.0"
+    import-lazy "^2.1.0"
+    is-ci "^1.0.10"
+    is-installed-globally "^0.1.0"
+    is-npm "^1.0.0"
+    latest-version "^3.0.0"
+    semver-diff "^2.0.0"
+    xdg-basedir "^3.0.0"
 
 update-notifier@~2.2.0:
   version "2.2.0"

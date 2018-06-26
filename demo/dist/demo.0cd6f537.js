@@ -23022,19 +23022,19 @@ webpackJsonp(
                 o = e.mutate,
                 a = e.action,
                 u = e.schema,
-                c = e.error,
-                s = i || o,
-                l = T(a),
-                f = _(a, u);
-              return (
-                (r.state = {
+                c = e.error;
+              if (((r.state = { error: c }), !c)) {
+                var s = i || o,
+                  l = T(a),
+                  f = _(a, u);
+                r.state = {
                   data: s && JSON.parse(s)[l],
                   name: l,
                   type: f,
-                  error: (!f && { message: 'Action not found: ' + l }) || c
-                }),
-                r
-              );
+                  error: !f && { message: 'Action not found: ' + l }
+                };
+              }
+              return r;
             }
             return (
               y(n, t),
@@ -23042,7 +23042,7 @@ webpackJsonp(
                 var e = this.props,
                   t = e.onError,
                   n = e.onLoad,
-                  r = (e.schema, this.state),
+                  r = this.state,
                   i = r.error,
                   o = r.data;
                 i ? t(i) : n(o);
@@ -32114,4 +32114,4 @@ webpackJsonp(
   },
   [0]
 );
-//# sourceMappingURL=demo.a264227e.js.map
+//# sourceMappingURL=demo.0cd6f537.js.map
