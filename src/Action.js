@@ -211,7 +211,7 @@ const withDataHandler = WC =>
           data: raw && JSON.parse(raw)[name],
           name,
           type,
-          error: !type && { message: `Action not found: ${name}` }
+          error: (!type && { message: `Action not found: ${name}` }) || error
         };
       }
     }
