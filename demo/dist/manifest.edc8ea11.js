@@ -38,7 +38,7 @@
         '' +
         ({ 0: 'demo' }[e] || e) +
         '.' +
-        { 0: '0cd6f537' }[e] +
+        { 0: '0f64ec83' }[e] +
         '.js');
     var i = setTimeout(a, 12e4);
     function a() {
@@ -79,4 +79,4 @@
       throw (console.error(e), e);
     });
 })([]);
-//# sourceMappingURL=manifest.2081862b.js.map
+//# sourceMappingURL=manifest.edc8ea11.js.map

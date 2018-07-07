@@ -1,9 +1,19 @@
-import { VALID, INVALID, renderEquals, dataEquals, errorEquals } from './utils';
+import {
+  VALID,
+  INVALID,
+  URL,
+  renderEquals,
+  dataEquals,
+  errorEquals
+} from './utils';
 import https from 'https';
 
 describe('Action', () => {
-  before(done => https.get('https://proxy-graphql.herokuapp.com', () => done()));
-  
+  before(function(done) {
+    this.timeout(10000);
+    https.get(URL, () => done());
+  });
+
   it(
     'renders data from a valid query',
     renderEquals(`query Q { ${VALID} }`, VALID)
