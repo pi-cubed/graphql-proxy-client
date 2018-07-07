@@ -48,6 +48,7 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "gh-pages": "^1.2.0",
     "gitbook-cli": "^2.3.2",
+    "gitbook-plugin-search": "^2.2.1",
     "husky": "^0.14.3",
     "jsdoc-babel": "^0.4.0",
     "jsdoc-to-markdown": "^4.0.1",

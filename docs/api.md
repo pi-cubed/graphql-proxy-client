@@ -11,6 +11,26 @@
 <dd><p>Return the children with an ApolloClient which defaults to point at
   <a href="http://proxy-graphql.herokuapp.com">http://proxy-graphql.herokuapp.com</a>.</p>
 </dd>
+<dt><a href="#Schema">Schema</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#withSchema">withSchema</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#withLoadingHandler">withLoadingHandler</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#withErrorHandler">withErrorHandler</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+</dl>
+
+## Functions
+
+<dl>
+<dt><a href="#withTidy">withTidy()</a></dt>
+<dd><p>TODO docs</p>
+</dd>
 </dl>
 
 <a name="withAction"></a>
@@ -85,3 +105,39 @@ http://proxy-graphql.herokuapp.com.
   </Action>
 </ProxyProvider>
 ```
+
+<a name="Schema"></a>
+
+## Schema
+
+TODO docs
+
+**Kind**: global variable  
+<a name="withSchema"></a>
+
+## withSchema
+
+TODO docs
+
+**Kind**: global variable  
+<a name="withLoadingHandler"></a>
+
+## withLoadingHandler
+
+TODO docs
+
+**Kind**: global variable  
+<a name="withErrorHandler"></a>
+
+## withErrorHandler
+
+TODO docs
+
+**Kind**: global variable  
+<a name="withTidy"></a>
+
+## withTidy()
+
+TODO docs
+
+**Kind**: global function
