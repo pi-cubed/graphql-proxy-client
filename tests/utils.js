@@ -8,11 +8,13 @@ import { Put } from 'typed-ui';
 // setup Enzyme
 Enzyme.configure({ adapter: new Adapter() });
 
+export const URL = 'https://proxy-graphql.herokuapp.com';
+
 export const withAction = (action, onLoad, onError) => {
   const wrapper = mount(
     <ProxyProvider>
       <Action
-        url="https://proxy-graphql.herokuapp.com"
+        url={URL}
         action={action}
         onLoad={d => onLoad(wrapper, d)}
         onError={e => onError(wrapper, e)}

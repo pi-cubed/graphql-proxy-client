@@ -1,25 +1,18 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { graphql, compose } from 'react-apollo';
-import { buildClientSchema } from 'graphql';
-
-/**
- * TODO docs
- *
- * @private
- */
-const withSchema = url =>
-  graphql(
-    gql`
-      query Schema($url: String!) {
-        schema(url: $url)
-      }
-    `,
-    {
-      name: 'schema',
-      options: { variables: { url } }
-    }
-  );
+import {
+  withSchema,
+  withLoadingHandler,
+  withErrorHandler,
+  withProps,
+  withTidy,
+  getOperation,
+  getField,
+  getType,
+  getName,
+  isMutation
+} from './utils';
 
 /**
  * TODO docs
@@ -72,79 +65,8 @@ const withMutation = (url, mutation) =>
  *
  * @private
  */
-const withProps = props => WC => newProps => <WC {...newProps} {...props} />;
-
-/**
- * TODO docs
- *
- * @private
- */
 const withOperation = (url, action) =>
   isMutation(action) ? withMutation(url, action) : withQuery(url, action);
-
-/**
- * TODO docs and do more
- *
- * @private
- */
-const getOperation = action => gql(action).definitions[0].operation;
-
-/**
- * TODO docs and do more
- *
- * @private
- */
-const isMutation = action => getOperation(action) === 'mutation';
-
-/**
- * TODO docs and pluralize
- *
- * @private
- */
-const getField = (action, schema) =>
-  buildClientSchema(JSON.parse(schema))
-    [isMutation(action) ? 'getMutationType' : 'getQueryType']()
-    .getFields()[getName(action)];
-
-/**
- * TODO docs and do
- *
- * @private
- */
-const getType = (action, schema) => {
-  const field = getField(action, schema);
-  return field && field.type;
-};
-
-/**
- * TODO docs and more
- *
- * @private
- */
-const getName = action =>
-  gql(action).definitions[0].selectionSet.selections[0].name.value;
-
-/**
- * TODO docs
- *
- * @private
- */
-const withTidy = WC => ({
-  query,
-  mutate,
-  schema,
-  loading,
-  error,
-  ...props
-}) => (
-  <WC
-    {...props}
-    query={query && query.query}
-    schema={schema && schema.schema}
-    loading={loading || (query && query.loading) || (schema && schema.loading)}
-    error={error || (query && query.error) || (schema && schema.error)}
-  />
-);
 
 /**
  * TODO docs
@@ -202,15 +124,18 @@ const withDataHandler = WC =>
     constructor(props) {
       super(props);
       const { query, mutate, action, schema, error } = props;
-      const raw = query || mutate;
-      const name = getName(action);
-      const type = getType(action, schema);
-      this.state = {
-        data: raw && JSON.parse(raw)[name],
-        name,
-        type,
-        error: (!type && { message: `Action not found: ${name}` }) || error
-      };
+      this.state = { error };
+      if (schema) {
+        const raw = query || mutate;
+        const name = getName(action);
+        const type = getType(action, schema);
+        this.state = {
+          data: raw && JSON.parse(raw)[name],
+          name,
+          type,
+          error: (!type && { message: `Action not found: ${name}` }) || error
+        };
+      }
     }
     componentDidMount() {
       const { onError, onLoad } = this.props;
@@ -226,26 +151,6 @@ const withDataHandler = WC =>
       return <WC {...this.props} {...this.state} />;
     }
   };
-
-/**
- * TODO docs
- *
- * @private
- */
-const withLoadingHandler = WC => props => {
-  const { loading, renderLoading } = props;
-  return loading ? renderLoading() : <WC {...props} />;
-};
-
-/**
- * TODO docs
- *
- * @private
- */
-const withErrorHandler = WC => props => {
-  const { error, renderError } = props;
-  return error ? renderError(error) : <WC {...props} />;
-};
 
 /**
  * TODO docs
