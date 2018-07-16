@@ -22,6 +22,23 @@ export const withSchema = url =>
 /**
  * TODO docs
  */
+export const withProps = props => WC => newProps => (
+  <WC {...newProps} {...props} />
+);
+
+/**
+ * TODO docs
+ */
+export const withDefaults = withProps({
+  renderLoading: () => <div>loading...</div>,
+  renderError: e => <div>{e.message || 'Something went wrong'}</div>,
+  onError: () => {},
+  onLoad: () => {}
+});
+
+/**
+ * TODO docs
+ */
 export const withLoadingHandler = WC => props => {
   const { loading, renderLoading } = props;
   return loading ? renderLoading() : <WC {...props} />;
@@ -96,12 +113,3 @@ export const getType = (action, schema) => {
  */
 export const getName = action =>
   gql(action).definitions[0].selectionSet.selections[0].name.value;
-
-/**
- * TODO docs
- *
- * @private
- */
-export const withProps = props => WC => newProps => (
-  <WC {...newProps} {...props} />
-);

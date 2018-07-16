@@ -32,7 +32,8 @@
   "dependencies": {
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
-    "react-apollo": "^2.1.6"
+    "react-apollo": "^2.1.6",
+    "typed-ui": "^0.5.0"
   },
   "peerDependencies": {
     "react": "16.x"
@@ -59,7 +60,6 @@
     "pretty-quick": "^1.6.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "typed-ui": "^0.3.4",
     "unfetch": "^3.0.0"
   },
   "author": "Pi Cubed",

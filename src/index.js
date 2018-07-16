@@ -6,6 +6,8 @@ export { Schema } from './Schema';
 
 export {
   withSchema,
+  withProps,
+  withDefaults,
   withLoadingHandler,
   withErrorHandler,
   withTidy

@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import { graphql, compose } from 'react-apollo';
 import {
   withSchema,
+  withDefaults,
   withLoadingHandler,
   withErrorHandler,
   withProps,
@@ -167,18 +168,6 @@ const withHandlers = isMutation =>
 
 /**
  * TODO docs
- *
- * @private
- */
-const withDefaults = withProps({
-  renderLoading: () => <div>loading...</div>,
-  renderError: e => <div>{e.message || 'Something went wrong'}</div>,
-  onError: () => {},
-  onLoad: () => {}
-});
-
-/**
- * TODO docs
  */
 export const withAction = props => {
   const { url, action } = props;
@@ -193,7 +182,7 @@ export const withAction = props => {
 };
 
 /**
- * Return component outputting the response of the GraphQL action.
+ * Component provides the response of the GraphQL action as a prop to child.
  *
  * @param {Object} props - The component props.
  * @param {string} props.url - The GraphQL api endpoint.

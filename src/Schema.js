@@ -3,43 +3,77 @@ import gql from 'graphql-tag';
 import { graphql, compose } from 'react-apollo';
 import {
   GraphQLString,
+  GraphQLBoolean,
+  GraphQLObjectType,
   buildClientSchema,
-  GraphQLInputObjectType
+  GraphQLInputObjectType,
+  isLeafType,
+  isWrappingType,
+  getNamedType
 } from 'graphql';
 import { print } from 'graphql/language';
 import { Put } from 'typed-ui';
 import { Action } from './Action';
 import {
   withSchema,
+  withDefaults,
   withTidy,
   withLoadingHandler,
   withErrorHandler,
   withProps
 } from './utils';
 
+const getArgKind = type =>
+  isLeafType(type)
+    ? `${getNamedType(type).name}Value`
+    : isWrappingType(type)
+      ? getArgKind(type.ofType)
+      : '';
+
+const getArgs = (type, args, input) =>
+  args.map(({ name, type }) => ({
+    kind: 'Argument',
+    name: { kind: 'Name', value: name },
+    value: {
+      kind: getArgKind(type),
+      value: input[name]
+    }
+  }));
+
+const getSelectionSet = type =>
+  isLeafType(type)
+    ? undefined
+    : isWrappingType(type)
+      ? getSelectionSet(type.ofType)
+      : {
+          kind: 'SelectionSet',
+          selections: type.getFields().map(({ name, type }) => ({
+            kind: 'Field',
+            name: { kind: 'Name', value: name },
+            selectionSet: getSelectionSet(type)
+          }))
+        };
+
 /**
  * TODO docs
  *
  * @private
  */
-const getAction = (field, values) =>
+const getAction = ({ name, args, type }, { input }) =>
   print({
     kind: 'Document',
     definitions: [
       {
         kind: 'OperationDefinition',
-        name: { kind: 'Name', value: 'Query' },
         operation: 'query',
         selectionSet: {
           kind: 'SelectionSet',
           selections: [
             {
               kind: 'Field',
-              name: { kind: 'Name', value: field.name },
-              selectionSet: {
-                kind: 'SelectionSet',
-                selections: getSelections(field.type.getFields(), values)
-              }
+              name: { kind: 'Name', value: name },
+              selectionSet: getSelectionSet(type),
+              arguments: getArgs(type, args, input)
             }
           ]
         }
@@ -52,105 +86,47 @@ const getAction = (field, values) =>
  *
  * @private
  */
-const getSelections = (fields, values) =>
-  _.keys(fields).map(name => ({
-    kind: 'Field',
-    name: {
-      kind: 'Name',
-      value: name
-    },
-    arguments: fields[name].args.map(arg => ({
-      kind: 'Argument',
-      name: {
-        kind: 'Name',
-        value: arg.name
-      },
-      value: {
-        kind: 'StringValue',
-        value: values[name][arg.name]
-      }
-    }))
-  }));
-
-/**
- * TODO docs
- *
- * @private
- */
-const getType = field =>
-  new GraphQLInputObjectType({
-    name: field.name,
-    fields: _.reduce(
-      field.args,
-      (acc, { name, type }) => ({
-        ...acc,
-        [name]: { type }
-      }),
-      {}
-    )
-  });
-
-/**
- * TODO docs
- *
- * @private
- */
-class Query extends Component {
-  /**
-   * TODO docs
-   *
-   * @private
-   */
+class PutSchema extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      submitted: false,
-      variables: {},
-      token: null,
-      action: null
+      actions: null
     };
-    this.type = getType(props.field);
   }
-
   render() {
+    const clientSchema = buildClientSchema(JSON.parse(this.props.schema));
+    const queryType = clientSchema.getQueryType();
     return (
       <div>
         <Put
-          type={this.type}
-          onChange={variables => this.setState({ variables, submitted: false })}
-        />
-        <Put
-          type={this.props.field.type}
-          onChange={data =>
-            this.setState({
-              action: getAction(props.field, data),
-              submitted: false
-            })
-          }
-          data={{ f: 'hey' }}
-        />
-        <Put
           type={
-            new GraphQLInputObjectType({
-              name: 'token',
+            new GraphQLObjectType({
+              name: 'Actions',
               fields: {
-                token: { type: GraphQLString }
+                query: { type: queryType },
+                submit: { type: GraphQLString }
               }
             })
           }
-          onChange={token => this.setState({ token, submitted: false })}
+          onChange={({ submit: { selected }, query: { output } }) =>
+            selected
+              ? this.setState({
+                  actions: _.keys(
+                    _.pickBy(output, ({ selected }) => selected)
+                  ).map(query =>
+                    getAction(queryType.getFields()[query], output[query])
+                  )
+                })
+              : null
+          }
         />
-        {this.state.submitted ? (
-          <Action
-            url={this.props.url}
-            action={this.state.action}
-            variables={this.state.variables}
-            token={this.state.token}
-          />
-        ) : null}
-        <button onClick={() => this.setState({ submitted: true })}>
-          Submit
-        </button>
+        {this.state.actions
+          ? this.state.actions.map((action, i) => (
+              <Action key={i} url={this.props.url} action={action}>
+                <Put />
+              </Action>
+            ))
+          : null}
       </div>
     );
   }
@@ -161,23 +137,9 @@ class Query extends Component {
  *
  * @private
  */
-const PutSchema = url => ({ schema }) => {
-  const clientSchema = buildClientSchema(JSON.parse(schema));
-  const fields = clientSchema.getQueryType().getFields();
-  return (
-    <div>
-      <Query url={url} field={fields['test']} />
-    </div>
-  );
-};
-
-/**
- * TODO docs
- *
- * @private
- */
 const makeSchema = props =>
   compose(
+    withDefaults,
     withProps(props),
     withSchema(props.url),
     withTidy,

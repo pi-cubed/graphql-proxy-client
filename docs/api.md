@@ -5,7 +5,7 @@
 <dd><p>TODO docs</p>
 </dd>
 <dt><a href="#Action">Action</a> ⇒ <code>Component</code></dt>
-<dd><p>Return component outputting the response of the GraphQL action.</p>
+<dd><p>Component provides the response of the GraphQL action as a prop to child.</p>
 </dd>
 <dt><a href="#ProxyProvider">ProxyProvider</a> ⇒ <code>Component</code></dt>
 <dd><p>Return the children with an ApolloClient which defaults to point at
@@ -15,6 +15,12 @@
 <dd><p>TODO docs</p>
 </dd>
 <dt><a href="#withSchema">withSchema</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#withProps">withProps</a></dt>
+<dd><p>TODO docs</p>
+</dd>
+<dt><a href="#withDefaults">withDefaults</a></dt>
 <dd><p>TODO docs</p>
 </dd>
 <dt><a href="#withLoadingHandler">withLoadingHandler</a></dt>
@@ -44,7 +50,7 @@ TODO docs
 
 ## Action ⇒ <code>Component</code>
 
-Return component outputting the response of the GraphQL action.
+Component provides the response of the GraphQL action as a prop to child.
 
 **Kind**: global variable  
 **Returns**: <code>Component</code> - A component that displays the response from the action.
@@ -116,6 +122,20 @@ TODO docs
 <a name="withSchema"></a>
 
 ## withSchema
+
+TODO docs
+
+**Kind**: global variable  
+<a name="withProps"></a>
+
+## withProps
+
+TODO docs
+
+**Kind**: global variable  
+<a name="withDefaults"></a>
+
+## withDefaults
 
 TODO docs
 
